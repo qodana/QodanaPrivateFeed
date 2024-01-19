@@ -1,0 +1,28 @@
+﻿name: Qodana
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+
+jobs:
+  qodana:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: 'Qodana Scan'
+        uses: JetBrains/qodana-action@main
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+          QODANA_NUGET_URL: ${{ secrets.QODANA_NUGET_URL }}
+          QODANA_NUGET_USER: ${{ secrets.QODANA_NUGET_USER }}
+          QODANA_NUGET_PASSWORD: ${{ secrets.QODANA_NUGET_PASSWORD }}
+        with:
+          upload-result: true

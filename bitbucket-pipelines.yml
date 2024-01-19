@@ -1,0 +1,22 @@
+image: atlassian/default-image:4
+
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Qodana
+          caches:
+            - qodana
+          image: jetbrains/qodana-dotnet:latest
+          script:
+            - export QODANA_TOKEN=$QODANA_TOKEN
+            - export QODANA_NUGET_URL=$QODANA_NUGET_URL
+            - export QODANA_NUGET_PASSWORD=$QODANA_NUGET_PASSWORD
+            - export QODANA_NUGET_USER=$QODANA_NUGET_USER
+            - qodana --results-dir=$BITBUCKET_CLONE_DIR/.qodana --report-dir=$BITBUCKET_CLONE_DIR/.qodana/report --cache-dir=$BITBUCKET_CLONE_DIR/.qodana/cache
+          artifacts:
+            - .qodana/report
+
+definitions:
+  caches:
+    qodana: .qodana/cache
