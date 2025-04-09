@@ -1,9 +1,12 @@
 ﻿namespace QodanaPrivateFeed;
-using PrivatePackage;
+
+using PrivateLibrary;
+
 public class FooBar
 {
     public static void UsePackage()
     {
-        Class1.Foo();
+        var foo = new PrivateLibraryClass();
+        foo.foo(1);
     }
 }
