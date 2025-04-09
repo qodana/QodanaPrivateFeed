@@ -1,5 +1,4 @@
 ﻿version: 1.0
-linter: jetbrains/qodana-dotnet:latest
+ide: QDNET
 dotnet:
     project: QodanaPrivateFeed.csproj
-ide: QDNET
