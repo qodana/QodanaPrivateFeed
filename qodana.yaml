@@ -2,3 +2,8 @@
 linter: jetbrains/qodana-dotnet:latest
 dotnet:
     project: QodanaPrivateFeed.csproj
+bootstrap: |
+  dotnet new nugetconfig --force
+  dotnet nuget add source -u $QODANA_NUGET_USER -p $QODANA_NUGET_PASSWORD --store-password-in-clear-text -n PrivateFeed $QODANA_NUGET_URL --configfile nuget.config
+# If you already have nuget.config in your repository, you can use instead:
+# dotnet nuget update source <feed-name> -u $QODANA_NUGET_USER -p $QODANA_NUGET_PASSWORD --store-password-in-clear-text --configfile nuget.config
